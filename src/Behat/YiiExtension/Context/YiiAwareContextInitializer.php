@@ -58,6 +58,6 @@ class YiiAwareContextInitializer implements ContextInitializerInterface
      */
     public function initialize(ContextInterface $context)
     {
-        $context->setYii($this->yii);
+        $context->setYiiWebApplication($this->yii);
     }
 }
