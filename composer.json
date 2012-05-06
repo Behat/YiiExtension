@@ -1,0 +1,23 @@
+{
+    "name": "behat/yii-extension",
+    "type": "yii-extension",
+    "description": "Yii framework extension for Behat",
+    "keywords": ["framework", "web", "bdd"],
+    "homepage": "http://mink.behat.org",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Konstantin Kudryashov",
+            "email": "ever.zet@gmail.com"
+        }
+    ],
+
+    "require": {
+        "php":          ">=5.3.2",
+        "behat/behat":  "dev-develop"
+    },
+
+    "autoload": {
+        "psr-0": { "Behat\\YiiExtension": "src/" }
+    }
+}
