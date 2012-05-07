@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Behat\YiiExtension
+ * This file is part of the Behat
  *
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
  *
@@ -9,25 +9,27 @@
  * with this source code in the file LICENSE.
  */
 
-if (file_exists('yii_extension.phar')) {
-    unlink('yii_extension.phar');
+$filename = 'mink_extension.phar';
+
+if (file_exists($filename)) {
+    unlink($filename);
 }
 
-$phar = new \Phar('yii_extension.phar', 0, 'extension.phar');
+$phar = new \Phar($filename, 0, 'extension.phar');
 $phar->setSignatureAlgorithm(\Phar::SHA1);
 $phar->startBuffering();
 
-addFileToPhar($phar, 'src/Behat/YiiExtension/Context/YiiAwareContextInterface.php');
-addFileToPhar($phar, 'src/Behat/YiiExtension/Context/YiiAwareContextInitializer.php');
-addFileToPhar($phar, 'src/Behat/YiiExtension/Extension.php');
-addFileToPhar($phar, 'src/Behat/YiiExtension/services/yii.xml');
-addFileToPhar($phar, 'init.php');
+foreach (findFiles('src') as $path) {
+    $phar->addFromString($path, file_get_contents(__DIR__.'/'.$path));
+}
+
+$phar->addFromString('init.php', file_get_contents(__DIR__.'/init.php'));
 
 $phar->setStub(<<<STUB
 <?php
 
 /*
- * This file is part of the Behat\YiiExtension
+ * This file is part of the Behat
  *
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
  *
@@ -44,6 +46,16 @@ STUB
 );
 $phar->stopBuffering();
 
-function addFileToPhar($phar, $path) {
-    $phar->addFromString($path, file_get_contents(__DIR__.'/'.$path));
+function findFiles($dir) {
+    $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir),
+      RecursiveIteratorIterator::CHILD_FIRST);
+
+    $files = array();
+    foreach ($iterator as $path) {
+      if ($path->isFile()) {
+          $files[] = $path->getPath().DIRECTORY_SEPARATOR.$path->getFilename();
+      }
+    }
+
+    return $files;
 }
