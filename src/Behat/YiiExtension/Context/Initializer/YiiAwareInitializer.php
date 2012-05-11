@@ -1,9 +1,11 @@
 <?php
 
-namespace Behat\YiiExtension\Context;
+namespace Behat\YiiExtension\Context\Initializer;
 
-use Behat\Behat\Context\ContextInitializerInterface,
+use Behat\Behat\Context\Initializer\InitializerInterface,
     Behat\Behat\Context\ContextInterface;
+
+use Behat\YiiExtension\Context\YiiAwareContextInterface;
 
 /*
  * This file is part of the Behat\YiiExtension.
@@ -19,7 +21,7 @@ use Behat\Behat\Context\ContextInitializerInterface,
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class YiiAwareContextInitializer implements ContextInitializerInterface
+class YiiAwareInitializer implements InitializerInterface
 {
     private $yii;
 

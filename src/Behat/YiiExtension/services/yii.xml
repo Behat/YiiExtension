@@ -4,16 +4,17 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
 
+        <parameter key="behat.yii_extension.context.initializer.class">Behat\YiiExtension\Context\Initializer\YiiAwareInitializer</parameter>
         <parameter key="behat.yii_extension.framework_script"></parameter>
         <parameter key="behat.yii_extension.config_script"></parameter>
 
     </parameters>
     <services>
 
-        <service id="behat.yii_extension.context_initializer" class="Behat\YiiExtension\Context\YiiAwareContextInitializer">
+        <service id="behat.yii_extension.context.initializer" class="%behat.yii_extension.context.initializer.class%">
             <argument>%behat.yii_extension.framework_script%</argument>
             <argument>%behat.yii_extension.config_script%</argument>
-            <tag name="behat.context_initializer" />
+            <tag name="behat.context.initializer" />
         </service>
 
     </services>
