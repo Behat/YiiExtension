@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the Behat\YiiExtension
+ * This file is part of the Behat
  *
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
  *
@@ -9,8 +9,11 @@
  * with this source code in the file LICENSE.
  */
 
-require_once __DIR__.'/src/Behat/YiiExtension/Context/YiiAwareContextInitializer.php';
-require_once __DIR__.'/src/Behat/YiiExtension/Context/YiiAwareContextInterface.php';
-require_once __DIR__.'/src/Behat/YiiExtension/Extension.php';
+spl_autoload_register(function($class) {
+    if (false !== strpos($class, 'Behat\\YiiExtension')) {
+        require_once(__DIR__.'/src/'.str_replace('\\', '/', $class).'.php');
+        return true;
+    }
+}, true, false);
 
 return new Behat\YiiExtension\Extension;

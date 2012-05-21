@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-$filename = 'mink_extension.phar';
+$filename = 'yii_extension.phar';
 
 if (file_exists($filename)) {
     unlink($filename);
