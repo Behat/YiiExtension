@@ -34,7 +34,7 @@ class Extension extends BaseExtension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/services'));
         $loader->load('yii.xml');
-        $configPath = $container->getParameter('behat.paths.config');
+        $configPath = $container->getParameter('behat.paths.base');
 
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
