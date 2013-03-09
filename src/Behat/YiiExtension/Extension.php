@@ -34,14 +34,18 @@ class Extension extends BaseExtension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/services'));
         $loader->load('yii.xml');
-        $configPath = $container->getParameter('behat.paths.base');
+
+        // starting from Behat 2.4.1, we can check for activated extensions
+        $extensions = $container->hasParameter('behat.extension.classes')
+                    ? $container->getParameter('behat.extension.classes')
+                    : array();
 
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `framework_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['framework_script'])) {
+        if (file_exists($cfg = $config['framework_script'])) {
             $config['framework_script'] = $cfg;
         }
 
@@ -50,11 +54,23 @@ class Extension extends BaseExtension
                 'Specify `config_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['config_script'])) {
+        if (file_exists($cfg = $config['config_script'])) {
             $config['config_script'] = $cfg;
         }
 
         $container->setParameter('behat.yii_extension.framework_script', $config['framework_script']);
         $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
+
+        if (isset($config['mink_driver']) && $config['mink_driver']) {
+            if (!class_exists('Behat\\Mink\\Driver\\BrowserKitDriver')) {
+                throw new \RuntimeException(
+                    'Install MinkBrowserKitDriver in order to activate wunit session.'
+                );
+            }
+
+            $loader->load('mink_driver_wunit.xml');
+        } elseif (in_array('Behat\\MinkExtension\\Extension', $extensions) && class_exists('Behat\\Mink\\Driver\\BrowserKitDriver')) {
+            $loader->load('mink_driver_wunit.xml');
+        }
     }
 }

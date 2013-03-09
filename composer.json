@@ -13,11 +13,18 @@
     ],
 
     "require": {
-        "php":          ">=5.3.2",
-        "behat/behat":  ">=2.4.0,<2.4.x-dev"
+        "php":                     ">=5.3.2",
+        "symfony/http-foundation": ">=2.0,<2.4-dev",
+        "behat/behat":             ">=2.4.1,<2.4.x-dev",
+		"behat/mink":              "1.4.*"
     },
 
     "autoload": {
-        "psr-0": { "Behat\\YiiExtension": "src/" }
+        "psr-0": {
+            "Behat\\YiiExtension": "src/",
+            "Behat\\Mink\\Driver": "src/",
+            "WUnit\\Http": "src/",
+            "WUnit\\HttpKernel": "src/"
+        }
     }
 }
