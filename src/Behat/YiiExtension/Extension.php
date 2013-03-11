@@ -36,6 +36,11 @@ class Extension extends BaseExtension
         $loader->load('yii.xml');
         $configPath = $container->getParameter('behat.paths.base');
 
+        // starting from Behat 2.4.1, we can check for activated extensions
+        $extensions = $container->hasParameter('behat.extension.classes')
+                    ? $container->getParameter('behat.extension.classes')
+                    : array();
+
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `framework_script` parameter for yii_extension.'
@@ -56,5 +61,17 @@ class Extension extends BaseExtension
 
         $container->setParameter('behat.yii_extension.framework_script', $config['framework_script']);
         $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
+
+        if (isset($config['mink_driver']) && $config['mink_driver']) {
+            if (!class_exists('Behat\\Mink\\Driver\\BrowserKitDriver')) {
+                throw new \RuntimeException(
+                    'Install MinkBrowserKitDriver in order to activate wunit session.'
+                );
+            }
+
+            $loader->load('mink_driver_wunit.xml');
+        } elseif (in_array('Behat\\MinkExtension\\Extension', $extensions) && class_exists('Behat\\Mink\\Driver\\BrowserKitDriver')) {
+            $loader->load('mink_driver_wunit.xml');
+        }
     }
 }
