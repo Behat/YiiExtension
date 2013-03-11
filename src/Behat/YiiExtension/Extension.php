@@ -34,6 +34,7 @@ class Extension extends BaseExtension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/services'));
         $loader->load('yii.xml');
+        $configPath = $container->getParameter('behat.paths.base');
 
         // starting from Behat 2.4.1, we can check for activated extensions
         $extensions = $container->hasParameter('behat.extension.classes')
@@ -45,7 +46,7 @@ class Extension extends BaseExtension
                 'Specify `framework_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $config['framework_script'])) {
+        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['framework_script'])) {
             $config['framework_script'] = $cfg;
         }
 
@@ -54,7 +55,7 @@ class Extension extends BaseExtension
                 'Specify `config_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $config['config_script'])) {
+        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['config_script'])) {
             $config['config_script'] = $cfg;
         }
 
