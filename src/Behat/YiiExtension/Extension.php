@@ -3,10 +3,11 @@
 namespace Behat\YiiExtension;
 
 use Symfony\Component\Config\FileLocator,
+    Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition,
     Symfony\Component\DependencyInjection\ContainerBuilder,
     Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-use Behat\Behat\Extension\Extension as BaseExtension;
+use Behat\Behat\Extension\ExtensionInterface;
 
 /*
  * This file is part of the Behat\YiiExtension
@@ -22,7 +23,7 @@ use Behat\Behat\Extension\Extension as BaseExtension;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class Extension extends BaseExtension
+class Extension implements ExtensionInterface
 {
     /**
      * Loads a specific configuration.
@@ -34,36 +35,74 @@ class Extension extends BaseExtension
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/services'));
         $loader->load('yii.xml');
-        $configPath = $container->getParameter('behat.paths.base');
+        $basePath = $container->getParameter('behat.paths.base');
 
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `framework_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['framework_script'])) {
+        if (file_exists($cfg = $basePath.DIRECTORY_SEPARATOR.$config['framework_script'])) {
             $config['framework_script'] = $cfg;
         }
+        $container->setParameter('behat.yii_extension.framework_script', $config['framework_script']);
 
         if (!isset($config['config_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `config_script` parameter for yii_extension.'
             );
         }
-        if (file_exists($cfg = $configPath.DIRECTORY_SEPARATOR.$config['config_script'])) {
+        if (file_exists($cfg = $basePath.DIRECTORY_SEPARATOR.$config['config_script'])) {
             $config['config_script'] = $cfg;
         }
-
-        $container->setParameter('behat.yii_extension.framework_script', $config['framework_script']);
         $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
 
         if (isset($config['mink_driver']) && $config['mink_driver']) {
-            if (!class_exists('Behat\\Mink\\Driver\\BrowserKitDriver')) {
-                throw new \RuntimeException(
-                    'Install MinkBrowserKitDriver in order to activate wunit session.'
-                );
+            if (isset($config['wunit'])) {
+                if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
+                    throw new \RuntimeException(
+                        'Install WUnitDriver in order to activate wunit session.'
+                    );
+                }
+
+                $loader->load('sessions/wunit.xml');
             }
-            $loader->load('sessions/wunit.xml');
         }
+    }
+
+    /**
+     * Setups configuration for current extension.
+     *
+     * @param ArrayNodeDefinition $builder
+     */
+    public function getConfig(ArrayNodeDefinition $builder)
+    {
+        $builder->
+            children()->
+                scalarNode('framework_script')->
+                    isRequired()->
+                end()->
+                scalarNode('config_script')->
+                    isRequired()->
+                end()->
+                scalarNode('mink_driver')->
+                    defaultValue(false)->
+                end()->
+                arrayNode('wunit')->
+                    children()->
+                    end()->
+                end()->
+			end()
+        ;
+    }
+
+    /**
+     * Returns compiler passes used by this extension.
+     *
+     * @return array
+     */
+    public function getCompilerPasses()
+    {
+        return array();
     }
 }
