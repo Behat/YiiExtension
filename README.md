@@ -23,6 +23,8 @@ default:
     Behat\YiiExtension\Extension:
       framework_script: ../../framework/yii.php
       config_script: ../config/test.php
+      mink_driver: true
+      wunit: ~
 ```
 
 Installation
