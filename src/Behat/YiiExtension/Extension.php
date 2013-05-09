@@ -7,7 +7,7 @@ use Symfony\Component\Config\FileLocator,
     Symfony\Component\DependencyInjection\ContainerBuilder,
     Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-use Behat\Behat\Extension\ExtensionInterface;
+use Behat\Behat\Extension\Extension as BaseExtension; 
 
 /*
  * This file is part of the Behat\YiiExtension
@@ -23,7 +23,7 @@ use Behat\Behat\Extension\ExtensionInterface;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class Extension implements ExtensionInterface
+class Extension extends BaseExtension
 {
     /**
      * Loads a specific configuration.
@@ -57,7 +57,7 @@ class Extension implements ExtensionInterface
         }
         $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
 
-        if (isset($config['mink_driver']) && $config['mink_driver']) {
+        if ($config['mink_driver']) {
             if (isset($config['wunit'])) {
                 if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
                     throw new \RuntimeException(
@@ -86,23 +86,13 @@ class Extension implements ExtensionInterface
                     isRequired()->
                 end()->
                 scalarNode('mink_driver')->
-                    defaultValue(false)->
+                    defaultFalse()->
                 end()->
                 arrayNode('wunit')->
                     children()->
                     end()->
                 end()->
-			end()
+            end()
         ;
-    }
-
-    /**
-     * Returns compiler passes used by this extension.
-     *
-     * @return array
-     */
-    public function getCompilerPasses()
-    {
-        return array();
     }
 }
