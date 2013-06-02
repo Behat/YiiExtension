@@ -7,7 +7,7 @@ use Symfony\Component\Config\FileLocator,
     Symfony\Component\DependencyInjection\ContainerBuilder,
     Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
-use Behat\Behat\Extension\Extension as BaseExtension; 
+use Behat\Behat\Extension\Extension as BaseExtension;
 
 /*
  * This file is part of the Behat\YiiExtension
