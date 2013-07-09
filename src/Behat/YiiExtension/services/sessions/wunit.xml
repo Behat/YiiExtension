@@ -5,6 +5,7 @@
     <parameters>
 
         <parameter key="behat.mink.driver.wunit.class">Behat\Mink\Driver\WUnitDriver</parameter>
+        <parameter key="behat.yii_extension.web_application_factory">\WUnit\WUnit</parameter>
 
     </parameters>
     <services>
