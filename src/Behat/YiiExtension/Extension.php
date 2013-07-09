@@ -57,16 +57,14 @@ class Extension extends BaseExtension
         }
         $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
 
-        if ($config['mink_driver']) {
-            if (isset($config['wunit'])) {
-                if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
-                    throw new \RuntimeException(
-                        'Install WUnitDriver in order to activate wunit session.'
-                    );
-                }
-
-                $loader->load('sessions/wunit.xml');
+        if (isset($config['wunit'])) {
+            if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
+                throw new \RuntimeException(
+                    'Install WUnitDriver in order to activate wunit session.'
+                );
             }
+
+            $loader->load('sessions/wunit.xml');
         }
     }
 
@@ -84,9 +82,6 @@ class Extension extends BaseExtension
                 end()->
                 scalarNode('config_script')->
                     isRequired()->
-                end()->
-                scalarNode('mink_driver')->
-                    defaultFalse()->
                 end()->
                 arrayNode('wunit')->
                     children()->
