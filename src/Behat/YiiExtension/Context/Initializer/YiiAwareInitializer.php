@@ -28,7 +28,7 @@ class YiiAwareInitializer implements InitializerInterface
     /**
      * Initializes initializer.
      */
-    public function __construct($frameworkScript, $configScript)
+    public function __construct($frameworkScript, $configScript, $webApplicationFactory)
     {
         defined('YII_DEBUG') or define('YII_DEBUG', true);
         require_once($frameworkScript);
@@ -38,7 +38,7 @@ class YiiAwareInitializer implements InitializerInterface
         \YiiBase::$enableIncludePath = false;
 
         // create the application and remember it
-        $this->yii = \Yii::createWebApplication($configScript);
+        $this->yii = $webApplicationFactory::createWebApplication($configScript);
     }
 
     /**

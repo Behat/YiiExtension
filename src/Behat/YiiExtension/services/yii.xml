@@ -7,6 +7,7 @@
         <parameter key="behat.yii_extension.context.initializer.class">Behat\YiiExtension\Context\Initializer\YiiAwareInitializer</parameter>
         <parameter key="behat.yii_extension.framework_script"></parameter>
         <parameter key="behat.yii_extension.config_script"></parameter>
+        <parameter key="behat.yii_extension.web_application_factory">\Yii</parameter>
 
     </parameters>
     <services>
@@ -14,6 +15,7 @@
         <service id="behat.yii_extension.context.initializer" class="%behat.yii_extension.context.initializer.class%">
             <argument>%behat.yii_extension.framework_script%</argument>
             <argument>%behat.yii_extension.config_script%</argument>
+            <argument>%behat.yii_extension.web_application_factory%</argument>
             <tag name="behat.context.initializer" />
         </service>
 
