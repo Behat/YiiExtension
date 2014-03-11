@@ -37,6 +37,11 @@ class Extension extends BaseExtension
         $loader->load('yii.xml');
         $basePath = $container->getParameter('behat.paths.base');
 
+        // starting from Behat 2.4.1, we can check for activated extensions
+        $extensions = $container->hasParameter('behat.extension.classes')
+                    ? $container->getParameter('behat.extension.classes')
+                    : array();
+
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `framework_script` parameter for yii_extension.'
@@ -64,6 +69,8 @@ class Extension extends BaseExtension
                 );
             }
 
+            $loader->load('sessions/wunit.xml');
+        } elseif (in_array('Behat\\MinkExtension\\Extension', $extensions) && class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
             $loader->load('sessions/wunit.xml');
         }
     }
