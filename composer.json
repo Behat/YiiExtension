@@ -3,7 +3,7 @@
     "type": "behat-extension",
     "description": "Yii framework extension for Behat",
     "keywords": ["framework", "web", "bdd"],
-    "homepage": "http://mink.behat.org",
+    "homepage": "http://behat.org",
     "license": "MIT",
     "authors": [
         {
@@ -14,10 +14,20 @@
 
     "require": {
         "php":          ">=5.3.2",
-        "behat/behat":  ">=2.4.1,<2.4.x-dev"
+        "behat/behat":  "~2.5"
+    },
+
+    "suggest": {
+        "behat/mink-wunit-driver": "to register the MinkWUnitDriver with MinkExtension"
     },
 
     "autoload": {
         "psr-0": { "Behat\\YiiExtension": "src/" }
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
 }

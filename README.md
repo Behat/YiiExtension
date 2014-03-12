@@ -9,12 +9,12 @@ Provides integration layer for the [Yii framework](http://www.yiiframework.com/)
 * Additional `wunit` session (sets as default) for Mink (if MinkExtension is installed)
   for functional testing without Selenium through [wunit](http://www.yiiframework.com/extension/wunit)
 
-between Behat 2.4+ and Yii.
+between Behat 2.5+ and Yii.
 
 Behat configuration
 -------------------
 
-``` yml
+```yml
 default:
   extensions:
     Behat\MinkExtension\Extension:
@@ -29,19 +29,18 @@ default:
 Installation
 ------------
 
-``` json
+```json
 {
-    "requires": {
-        "behat/mink":           "1.4.*",
-		"behat/mink-extension": "*",
-		"behat/yii-extension":  "*"
+    "require-dev": {
+        "behat/mink":           "~1.5",
+		"behat/mink-extension": "~1.3",
+		"behat/yii-extension":  "~1.0"
     }
 }
 ```
 
-``` bash
-curl http://getcomposer.org/installer | php
-php composer.phar install
+```bash
+$ composer update 'behat/mink' 'behat/mink-extension' 'behat/yii-extension'
 ```
 
 Copyright
@@ -53,4 +52,4 @@ Maintainers
 -----------
 
 * Konstantin Kudryashov [everzet](http://github.com/everzet) [lead developer]
-* Other [awesome developers](https://github.com/Behat/MinkExtension/graphs/contributors)
+* Other [awesome developers](https://github.com/Behat/YiiExtension/graphs/contributors)

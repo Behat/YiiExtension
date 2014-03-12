@@ -20,7 +20,7 @@ interface YiiAwareContextInterface
     /**
      * Sets Yii web application instance.
      *
-     * @param Yii $mink Yii session manager
+     * @param \CWebApplication $yii Yii application
      */
     function setYiiWebApplication(\CWebApplication $yii);
 }

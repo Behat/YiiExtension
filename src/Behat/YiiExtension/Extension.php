@@ -37,10 +37,7 @@ class Extension extends BaseExtension
         $loader->load('yii.xml');
         $basePath = $container->getParameter('behat.paths.base');
 
-        // starting from Behat 2.4.1, we can check for activated extensions
-        $extensions = $container->hasParameter('behat.extension.classes')
-                    ? $container->getParameter('behat.extension.classes')
-                    : array();
+        $extensions = $container->getParameter('behat.extension.classes');
 
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
