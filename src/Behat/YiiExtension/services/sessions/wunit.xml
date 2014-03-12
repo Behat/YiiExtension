@@ -2,14 +2,13 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-    <parameters>
 
+    <parameters>
         <parameter key="behat.mink.driver.wunit.class">Behat\Mink\Driver\WUnitDriver</parameter>
         <parameter key="behat.yii_extension.web_application_factory">\WUnit\WUnit</parameter>
-
     </parameters>
-    <services>
 
+    <services>
         <service id="behat.mink.session.wunit" class="%behat.mink.session.class%">
             <argument type="service">
                 <service class="%behat.mink.driver.wunit.class%">
@@ -18,6 +17,5 @@
             <argument type="service" id="behat.mink.selector.handler" />
             <tag name="behat.mink.session" alias="wunit" />
         </service>
-
     </services>
 </container>

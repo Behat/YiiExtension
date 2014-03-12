@@ -1,14 +1,5 @@
 <?php
 
-namespace Behat\YiiExtension;
-
-use Symfony\Component\Config\FileLocator,
-    Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition,
-    Symfony\Component\DependencyInjection\ContainerBuilder,
-    Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-
-use Behat\Behat\Extension\Extension as BaseExtension;
-
 /*
  * This file is part of the Behat\YiiExtension
  *
@@ -17,6 +8,14 @@ use Behat\Behat\Extension\Extension as BaseExtension;
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+
+namespace Behat\YiiExtension;
+
+use Behat\Behat\Extension\Extension as BaseExtension;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
 /**
  * Yii extension for Behat class.
