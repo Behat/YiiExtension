@@ -14,7 +14,7 @@
 
     "require": {
         "php":          ">=5.3.2",
-        "behat/behat":  "~2.5"
+        "behat/behat":  "^3.2"
     },
 
     "suggest": {
