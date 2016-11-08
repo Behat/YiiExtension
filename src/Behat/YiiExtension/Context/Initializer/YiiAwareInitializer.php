@@ -42,24 +42,16 @@ class YiiAwareInitializer implements ContextInitializer
     }
 
     /**
-     * Checks if initializer supports provided context.
-     *
-     * @param ContextInterface $context
-     *
-     * @return Boolean
-     */
-    public function supportsContext(Context $context)
-    {
-        return $context instanceof YiiAwareContextInterface;
-    }
-
-    /**
      * Initializes provided context.
      *
      * @param ContextInterface $context
      */
     public function initializeContext(Context $context)
     {
+        if (!$context instanceof YiiAwareContextInterface) {
+            return;
+        }
+
         $context->setYiiWebApplication($this->yii);
     }
 }
