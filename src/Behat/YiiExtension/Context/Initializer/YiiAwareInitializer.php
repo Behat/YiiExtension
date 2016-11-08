@@ -11,8 +11,8 @@
 
 namespace Behat\YiiExtension\Context\Initializer;
 
-use Behat\Behat\Context\Initializer\InitializerInterface;
-use Behat\Behat\Context\ContextInterface;
+use Behat\Behat\Context\Context;
+use Behat\Behat\Context\Initializer\ContextInitializer;
 use Behat\YiiExtension\Context\YiiAwareContextInterface;
 
 /**
@@ -21,7 +21,7 @@ use Behat\YiiExtension\Context\YiiAwareContextInterface;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class YiiAwareInitializer implements InitializerInterface
+class YiiAwareInitializer implements ContextInitializer
 {
     private $yii;
 
@@ -48,7 +48,7 @@ class YiiAwareInitializer implements InitializerInterface
      *
      * @return Boolean
      */
-    public function supports(ContextInterface $context)
+    public function supportsContext(Context $context)
     {
         return $context instanceof YiiAwareContextInterface;
     }
@@ -58,7 +58,7 @@ class YiiAwareInitializer implements InitializerInterface
      *
      * @param ContextInterface $context
      */
-    public function initialize(ContextInterface $context)
+    public function initializeContext(Context $context)
     {
         $context->setYiiWebApplication($this->yii);
     }

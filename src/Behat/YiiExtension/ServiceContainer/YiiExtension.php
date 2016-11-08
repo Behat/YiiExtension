@@ -9,11 +9,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Behat\YiiExtension;
+namespace Behat\YiiExtension\ServiceContainer;
 
-use Behat\Behat\Extension\Extension as BaseExtension;
-use Symfony\Component\Config\FileLocator;
+use Behat\Testwork\ServiceContainer\Extension;
+use Behat\Testwork\ServiceContainer\ExtensionManager;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
@@ -22,21 +23,29 @@ use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class Extension extends BaseExtension
+class YiiExtension implements Extension
 {
+    public function getConfigKey()
+    {
+        return 'yii_extension';
+    }
+
     /**
      * Loads a specific configuration.
      *
      * @param array            $config    Extension configuration hash (from behat.yml)
      * @param ContainerBuilder $container ContainerBuilder instance
      */
-    public function load(array $config, ContainerBuilder $container)
+    public function load(ContainerBuilder $container, array $config)
     {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/services'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../services'));
         $loader->load('yii.xml');
-        $basePath = $container->getParameter('behat.paths.base');
 
-        $extensions = $container->getParameter('behat.extension.classes');
+        // echo json_encode($container->getParameterBag()->all()); exit;
+
+        $basePath = $container->getParameter('paths.base');
+
+        $extensions = $container->getParameter('extensions');
 
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
@@ -46,7 +55,7 @@ class Extension extends BaseExtension
         if (file_exists($cfg = $basePath.DIRECTORY_SEPARATOR.$config['framework_script'])) {
             $config['framework_script'] = $cfg;
         }
-        $container->setParameter('behat.yii_extension.framework_script', $config['framework_script']);
+        $container->setParameter('yii_extension.framework_script', $config['framework_script']);
 
         if (!isset($config['config_script'])) {
             throw new \InvalidArgumentException(
@@ -56,7 +65,7 @@ class Extension extends BaseExtension
         if (file_exists($cfg = $basePath.DIRECTORY_SEPARATOR.$config['config_script'])) {
             $config['config_script'] = $cfg;
         }
-        $container->setParameter('behat.yii_extension.config_script', $config['config_script']);
+        $container->setParameter('yii_extension.config_script', $config['config_script']);
 
         if ($config['mink_driver']) {
             if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
@@ -76,7 +85,7 @@ class Extension extends BaseExtension
      *
      * @param ArrayNodeDefinition $builder
      */
-    public function getConfig(ArrayNodeDefinition $builder)
+    public function configure(ArrayNodeDefinition $builder)
     {
         $boolFilter = function ($v) {
             $filtered = filter_var($v, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
@@ -100,4 +109,7 @@ class Extension extends BaseExtension
             end()
         ;
     }
+
+    public function initialize(ExtensionManager $extensionManager) {}
+    public function process(ContainerBuilder $container) {}
 }
