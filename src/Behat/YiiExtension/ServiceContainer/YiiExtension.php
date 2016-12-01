@@ -41,8 +41,6 @@ class YiiExtension implements Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../services'));
         $loader->load('yii.xml');
 
-        // echo json_encode($container->getParameterBag()->all()); exit;
-
         $basePath = $container->getParameter('paths.base');
 
         $extensions = $container->getParameter('extensions');
