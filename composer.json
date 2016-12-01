@@ -9,6 +9,10 @@
         {
             "name": "Konstantin Kudryashov",
             "email": "ever.zet@gmail.com"
+        },
+        {
+            "name": "Michael Kubovic",
+            "email": "michael.kubovic@gmail.com"
         }
     ],
 
@@ -27,7 +31,7 @@
 
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
