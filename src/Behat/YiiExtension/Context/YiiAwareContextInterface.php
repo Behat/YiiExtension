@@ -11,12 +11,14 @@
 
 namespace Behat\YiiExtension\Context;
 
+use Behat\Behat\Context\Context;
+
 /**
  * Yii aware interface for contexts.
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-interface YiiAwareContextInterface
+interface YiiAwareContextInterface extends Context
 {
     /**
      * Sets Yii web application instance.
