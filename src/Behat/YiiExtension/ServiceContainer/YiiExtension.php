@@ -84,12 +84,6 @@ class YiiExtension implements Extension
                 scalarNode('config_script')->
                     isRequired()->
                 end()->
-                booleanNode('mink_driver')->
-                    beforeNormalization()->
-                        ifString()->then($boolFilter)->
-                    end()->
-                    defaultFalse()->
-                end()->
             end()
         ;
     }
