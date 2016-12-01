@@ -71,11 +71,6 @@ class YiiExtension implements Extension
      */
     public function configure(ArrayNodeDefinition $builder)
     {
-        $boolFilter = function ($v) {
-            $filtered = filter_var($v, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
-            return (null === $filtered) ? $v : $filtered;
-        };
-
         $builder->
             children()->
                 scalarNode('framework_script')->
