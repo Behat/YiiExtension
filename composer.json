@@ -21,10 +21,6 @@
         "behat/behat":  "^3.2"
     },
 
-    "suggest": {
-        "behat/mink-wunit-driver": "to register the MinkWUnitDriver with MinkExtension"
-    },
-
     "autoload": {
         "psr-0": { "Behat\\YiiExtension": "src/" }
     },

@@ -43,8 +43,6 @@ class YiiExtension implements Extension
 
         $basePath = $container->getParameter('paths.base');
 
-        $extensions = $container->getParameter('extensions');
-
         if (!isset($config['framework_script'])) {
             throw new \InvalidArgumentException(
                 'Specify `framework_script` parameter for yii_extension.'
@@ -64,18 +62,6 @@ class YiiExtension implements Extension
             $config['config_script'] = $cfg;
         }
         $container->setParameter('yii_extension.config_script', $config['config_script']);
-
-        if ($config['mink_driver']) {
-            if (!class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
-                throw new \RuntimeException(
-                    'Install WUnitDriver in order to activate wunit session.'
-                );
-            }
-
-            $loader->load('sessions/wunit.xml');
-        } elseif (in_array('Behat\\MinkExtension\\Extension', $extensions) && class_exists('Behat\\Mink\\Driver\\WUnitDriver')) {
-            $loader->load('sessions/wunit.xml');
-        }
     }
 
     /**
