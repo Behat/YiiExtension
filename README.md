@@ -1,6 +1,16 @@
 YiiExtension
 ============
 
+
+This package is abandoned
+-------------------------
+
+This package (which was never updated for Behat v3.x) is now abandoned and will not receive further updates.
+There is an in-progress PR at https://github.com/Behat/YiiExtension/pull/13 which may be useful should 
+anyone wish to fork to a community extension.
+
+---
+
 Provides integration layer for the [Yii framework](http://www.yiiframework.com/):
 
 * Additional services for Behat (`Yii`, `Sessions`, `Drivers`)
