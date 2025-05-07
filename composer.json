@@ -1,5 +1,6 @@
 {
     "name": "behat/yii-extension",
+    "abandoned": true,
     "type": "behat-extension",
     "description": "Yii framework extension for Behat",
     "keywords": ["framework", "web", "bdd"],
